@@ -64,7 +64,7 @@ function App() {
           <GuessList guess={guess} highlight={win ? 'highlight' : ''}/>
         </div>
         <div className="right-container">
-          <input type = "text" value = {num} readOnly={true}/>
+          <input type = "text" value = {num} aria-label="guess-input" readOnly={true}/>
           <p className="error">{error}</p>
           <div className="keypad">
             <button className="clear" onClick={clear}>Clear</button>

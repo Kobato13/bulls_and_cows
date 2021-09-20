@@ -14,6 +14,13 @@ test("renders the title", () => {
   expect(title).toBeInTheDocument()
 })
 
+test('check render number 1', ()=> {
+  render(<App />);
+  const input1 = screen.getByText(/1/i);
+  fireEvent.change(input1, { target: { value: "1" } });
+  expect(input1.value).toBe("1")
+});
+
 describe("Renders the guess, bulls and cows", () => {
   it("should render the guess", () => {
     render(<Guess guess={[]} />)
@@ -33,15 +40,6 @@ describe("Renders the guess, bulls and cows", () => {
     expect(cows).toBeInTheDocument()
   })
 })
-
-
-test('check render number 1', ()=> {
-  render(<App />);
-  const input = screen.getByText(/1/i);
-  fireEvent.change(input, { target: { value: "1" } });
-  expect(input.value).toBe("1")
-});
-
 
 describe("Renders intial random number", () => {
   it('should render a 4 digit number', () => {
@@ -67,3 +65,18 @@ describe("Renders intial random number", () => {
   // })
 })
 
+const setup = () => {
+  const utils = render(<App />)
+  const input = utils.getByLabelText('guess-input')
+  return {
+    input,
+    ...utils,
+  }
+}
+
+test('It should not allow letters to be inputted', () => {
+  const {input} = setup()
+  expect(input.value).toBe('') // empty before
+  fireEvent.change(input, {target: {value: 'test'}})
+  expect(input.value).toBe('') //empty after
+})
