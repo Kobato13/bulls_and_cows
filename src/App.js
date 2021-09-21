@@ -75,13 +75,17 @@ function App() {
         <Title title={win} />
         <div className="left-container">
           <Score score={guess.length} />
-          <GuessList guess={guess} highlight={win ? 'highlight' : ''}/>
+          <GuessList 
+            guess={guess} highlight={win ? 'highlight' : ''} 
+            data-testid="guess-list"/>
         </div>
         <div className="right-container">
           <Input num={num} />
           <Error error={error}/>
           <div className="keypad">
-            <OtherButtons className="clear" onClick={clear} buttonText="Clear" disabled={isWin}/>
+            <OtherButtons 
+              className="clear" onClick={clear} 
+              buttonText="Clear" disabled={isWin} />
             <KeypadButton keyPad={keypad} keypadNum={0} disabled={isWin} />
             <KeypadButton keyPad={keypad} keypadNum={1} disabled={isWin}/>
             <KeypadButton keyPad={keypad} keypadNum={2} disabled={isWin}/>
@@ -92,7 +96,9 @@ function App() {
             <KeypadButton keyPad={keypad} keypadNum={7} disabled={isWin}/>
             <KeypadButton keyPad={keypad} keypadNum={8} disabled={isWin}/>
             <KeypadButton keyPad={keypad} keypadNum={9} disabled={isWin}/>
-            <OtherButtons className="guess" onClick={handleGuess} buttonText="Guess!" disabled={isWin}/>
+            <OtherButtons 
+              className="guess" onClick={handleGuess} 
+              buttonText="Guess!" disabled={isWin}/>
           </div>
         </div>
       </div>
