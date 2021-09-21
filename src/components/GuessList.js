@@ -1,5 +1,5 @@
 import React from 'react'
-import Guess from "./Guess"
+import Guess from "./Guess/Guess"
 
 function GuessList({ guess, highlight }) {
   return (

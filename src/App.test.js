@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import App, { initialRandom } from './App';
+import App, { secretNumber } from './App';
 import GuessList from "./components/GuessList"
-import Guess from "./components/Guess"
+import Guess from "./components/Guess/Guess"
 
 
 test("render app", () => {
@@ -43,26 +43,21 @@ describe("Renders the guess, bulls and cows", () => {
 
 describe("Renders intial random number", () => {
   it('should render a 4 digit number', () => {
-    const initialNumber = initialRandom()
-    expect(initialNumber.length).toBe(4)
+    const secretNum = secretNumber()
+    expect(secretNum.length).toBe(4)
   })
+
   // test("guess number has to be 4-digits", () => {
   //   render(<Guess guess={[]} />)
   //   const guessNum = screen.getByText(/1234/i)
   //   expect(guessNum.length).toBe(4)
   // })
   
-  // test("renders a random number", () => {
-  //   const initialNumber = initialRandom()
-  //   expect(initialNumber).not.toBe(null)
-  // })
+  test("renders a random number", () => {
+    const secretNum = secretNumber()
+    expect(secretNum).not.toBe(null)
+  })
   
-  // test("unique, not repeated numbers", () => {
-  //   const initialNumber = initialRandom()
-  //   expect(initialNumber).toBe(true)
-  //   expect([1, 2, 3, 4]).toBe([1, 2, 3, 4])
-  //   expect(1122).toBe(false)
-  // })
 })
 
 const setup = () => {
@@ -74,9 +69,22 @@ const setup = () => {
   }
 }
 
-test('It should not allow letters to be inputted', () => {
-  const {input} = setup()
-  expect(input.value).toBe('') // empty before
-  fireEvent.change(input, {target: {value: 'test'}})
-  expect(input.value).toBe('') //empty after
+describe("Renders the inputed numbers", () => {
+
+  it('should not allow letters to be inputted', () => {
+    const {input} = setup()
+    expect(input.value).toBe('')
+    fireEvent.change(input, {target: {value: 'test'}})
+    expect(input.value).toBe('')
+  })
+
+  // it('should have maximum of 4-digits inputted', () => {
+  //   const inputTest = screen.getByTestId("guess-input-id");
+  //   expect(inputTest).toBeInTheDocument()
+  //   fireEvent.change(inputTest, {target: {value: '1234'}})
+  //   expect(inputTest.value).toBe('1234')
+  // })
 })
+
+
+

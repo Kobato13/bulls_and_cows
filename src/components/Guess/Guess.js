@@ -1,4 +1,5 @@
 import React from 'react'
+import './Guess.css'
 
 function Guess({ guess, highlight }) {
   return (

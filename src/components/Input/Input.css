@@ -1,0 +1,14 @@
+input[type="text"] {
+  height: 2.5rem;
+  width: 11.5rem;
+  margin-bottom: 0.5rem;
+  background: #262834;
+  text-align: center;
+  color: white;
+  border: 0px;
+  cursor: auto;
+  border-radius: 0.4rem;
+}
+input:focus {
+  outline: none;
+}

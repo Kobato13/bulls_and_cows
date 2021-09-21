@@ -1,0 +1,9 @@
+li {
+  background: #262834;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.2rem;
+  border-radius: 0.2rem;
+  list-style: none;
+}

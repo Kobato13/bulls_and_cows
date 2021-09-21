@@ -10,9 +10,8 @@ body {
   justify-content: center;
   align-items: center; */
   box-sizing: border-box;
-}
-
-.App {
+  background: url("/src/images/background.jpg");
+  background-size: cover;
 }
 
 .container {
@@ -44,22 +43,6 @@ h1 {
   height: 17rem;
 }
 
-.score {
-  margin: 0;
-  background: #56cbdb;
-  border-radius: 0.2rem;
-  padding: 0.2rem;
-  font-size: 0.8rem;
-}
-li {
-  background: #262834;
-  color: white;
-  display: flex;
-  flex-direction: row;
-  margin-top: 0.2rem;
-  border-radius: 0.2rem;
-  list-style: none;
-}
 .guess-item {
   flex-grow: 2;
 }
@@ -73,30 +56,7 @@ p {
 .right-container {
   width: 12rem;
 }
-input[type="text"] {
-  height: 2.5rem;
-  width: 11.5rem;
-  margin-bottom: 0.5rem;
-  background: #262834;
-  text-align: center;
-  color: white;
-  border: 0px;
-  cursor: auto;
-  border-radius: 0.4rem;
-}
-input:focus {
-  outline: none;
-}
-.error {
-  color: rgb(204, 0, 0);
-  font-size: 0.8rem;
-  margin: 0.2rem;
-}
-.keypad {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: minmax(2.5rem, auto);
-}
+
 .clear {
   grid-column: 1/3;
   background: #56cbdb;
@@ -104,19 +64,6 @@ input:focus {
 .guess {
   grid-column: 1/4;
   background: #56cbdb;
-}
-
-button {
-  background: #262834;
-  color: white;
-  margin: 0.1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-button:hover {
-  background: rgb(39, 39, 39);
-  margin: 0.1rem;
 }
 
 ::-webkit-scrollbar {

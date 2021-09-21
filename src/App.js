@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react"
 import './App.css'
 import GuessList from "./components/GuessList"
+import KeypadButton from "./components/KeypadButton"
+import OtherButtons from "./components/OtherButtons"
+import Error from "./components/Error/Error"
+import Input from "./components/Input/Input"
+import Score from "./components/Score/Score"
+import Title from "./components/Title"
 
 function App() {
   const [initialNum, setInitialNum] = useState([])
@@ -8,9 +14,10 @@ function App() {
   const [num, setNum] = useState([''])
   const [error, setError] = useState(false)
   const [win, setWin] = useState('')
+  const [isWin, setIsWin] = useState(false)
 
   useEffect(() => {
-    setInitialNum(initialRandom())
+    setInitialNum(secretNumber())
   }, [])
   
   function keypad (numKey) {
@@ -32,7 +39,7 @@ function App() {
   function handleGuess() {
     let bullCount = 0
     let cowCount = 0
-
+    
     for (let i = 0; i < 4; i++) {
       if (num.includes(initialNum[i]) && initialNum[i].toString() === num[i]) {
         bullCount++
@@ -43,13 +50,20 @@ function App() {
 
     if (num === '') return setError("Guess number can't be empty")
     if (num.length < 4) return setError("Enter a 4-digit number")
+    for (let i = 0; i < guess.length; i++) {
+      if (Object.values(guess[i]).includes(num)) 
+        return setError("You already guessed this number")
+    }
 
     setGuesses(prevGuess => {
       return [...prevGuess, { 
         id: guess.length, guessNum: num, bull: bullCount, cow: cowCount}]
     })
 
-    if (bullCount === 4) setWin("Win number is " + initialNum)
+    if (bullCount === 4){
+      setWin("Win number is " + initialNum)
+      setIsWin(true)
+    }
 
     clear()
   }
@@ -57,28 +71,28 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <h1>Bulls and Cows</h1>
-        <h1>{win}</h1>
+        <Title title="Bulls and Cows" />
+        <Title title={win} />
         <div className="left-container">
-          <p className="score">Score: {guess.length}</p>
+          <Score score={guess.length} />
           <GuessList guess={guess} highlight={win ? 'highlight' : ''}/>
         </div>
         <div className="right-container">
-          <input type = "text" value = {num} aria-label="guess-input" readOnly={true}/>
-          <p className="error">{error}</p>
+          <Input num={num} />
+          <Error error={error}/>
           <div className="keypad">
-            <button className="clear" onClick={clear}>Clear</button>
-            <button onClick={() => keypad(0)}>{0}</button>
-            <button onClick={() => keypad(1)}>{1}</button>
-            <button onClick={() => keypad(2)}>{2}</button>
-            <button onClick={() => keypad(3)}>{3}</button>
-            <button onClick={() => keypad(4)}>{4}</button>
-            <button onClick={() => keypad(5)}>{5}</button>
-            <button onClick={() => keypad(6)}>{6}</button>
-            <button onClick={() => keypad(7)}>{7}</button>
-            <button onClick={() => keypad(8)}>{8}</button>
-            <button onClick={() => keypad(9)}>{9}</button>
-            <button className="guess" onClick={handleGuess}>Guess!</button>
+            <OtherButtons className="clear" onClick={clear} buttonText="Clear" disabled={isWin}/>
+            <KeypadButton keyPad={keypad} keypadNum={0} disabled={isWin} />
+            <KeypadButton keyPad={keypad} keypadNum={1} disabled={isWin}/>
+            <KeypadButton keyPad={keypad} keypadNum={2} disabled={isWin}/>
+            <KeypadButton keyPad={keypad} keypadNum={3} disabled={isWin}/>
+            <KeypadButton keyPad={keypad} keypadNum={4} disabled={isWin}/>
+            <KeypadButton keyPad={keypad} keypadNum={5} disabled={isWin}/>
+            <KeypadButton keyPad={keypad} keypadNum={6} disabled={isWin}/>
+            <KeypadButton keyPad={keypad} keypadNum={7} disabled={isWin}/>
+            <KeypadButton keyPad={keypad} keypadNum={8} disabled={isWin}/>
+            <KeypadButton keyPad={keypad} keypadNum={9} disabled={isWin}/>
+            <OtherButtons className="guess" onClick={handleGuess} buttonText="Guess!" disabled={isWin}/>
           </div>
         </div>
       </div>
@@ -88,7 +102,7 @@ function App() {
 
 export default App
 
-function initialRandom () {
+export function secretNumber () {
   let numArray = []
   for(let i = 0; numArray.length < 4; i++){
     let num = Math.floor(Math.random() * 10);
@@ -98,5 +112,3 @@ function initialRandom () {
   }
   return numArray
 }
-
-export { initialRandom }

@@ -1,0 +1,17 @@
+button {
+  background: #262834;
+  color: white;
+  margin: 0.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background: rgb(39, 39, 39);
+  margin: 0.1rem;
+}
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(2.5rem, auto);
+}
