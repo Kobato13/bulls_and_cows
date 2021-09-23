@@ -98,7 +98,7 @@ function App() {
             <KeypadButton keyPad={keypad} keypadNum={9} disabled={isWin}/>
             <OtherButtons 
               className="guess" onClick={handleGuess} 
-              buttonText="Guess!" disabled={isWin}/>
+              buttonText="Guess!" disabled={isWin} datatestid="guess-button"/>
           </div>
         </div>
       </div>

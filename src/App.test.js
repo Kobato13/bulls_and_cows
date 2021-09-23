@@ -2,6 +2,8 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import App, { secretNumber } from './App'
 import Guess from "./components/Guess/Guess"
 import Input from "./components/Input/Input"
+import OtherButtons from "./components/OtherButtons"
+import Error from "./components/Error/Error"
 
 
 test("render app", () => {
@@ -53,39 +55,46 @@ describe("Renders intial random number", () => {
 
 })
 
-const setup = () => {
-  const utils = render(<Input />)
-  const input = utils.getByTestId('guess-input')
-  return {
-    input,
-    ...utils,
-  }
-}
-
 describe("Renders the inputed numbers", () => {
-
   // //doesnt work because It also accept letters but It only has buttons for numbers
   // it('should not allow letters to be inputted', () => {
-  //   const {input} = setup()
-  //   expect(input.value).toBe('')
-  //   fireEvent.change(input, {target: {value: 'test'}})
-  //   expect(input.value).toBe('')
+  //   render (<App />)
+  //   const inputText = screen.getByRole('textbox')
+  //   fireEvent.click(screen.getByRole('button', {  name: /test/i}))
+  //   expect(inputText.value).toBe('')
   // })
-
+    
   it('should render inputted numbers', () => {
-    const {input} = setup()
-    fireEvent.change(input, {target: {value: '1234'}})
-    expect(input.value).toBe('1234')
+    render (<App />)
+    const inputText = screen.getByRole('textbox')
+    fireEvent.click(screen.getByRole('button', {  name: /1/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /2/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /3/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /4/i}))
+    expect(inputText.value).toBe('1234')
   })
 
-  // it('should have maximum of 4-digits inputted', () => {
-  //   const button = screen.getByText(/Guess!/i)
-  //   const {input} = setup()
-  //   fireEvent.change(input, {target: {value: '1234'}})
-  //   fireEvent.click(button)
-  //   expect(screen.getByTestId("guess-list")).toHaveTextContent('1234');
-  //   expect(input.value).toBe('1234')
-  // })
+  it('should have maximum of 4-digits inputted', () => {
+    render (<App />)
+    //render (<Error />)
+    const inputText = screen.getByRole('textbox')
+    //const errorText = screen.getByText(/4\-digit max/i)
+    fireEvent.click(screen.getByRole('button', {  name: /1/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /2/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /3/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /4/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /5/i}))
+    expect(inputText.value).not.toBe('12345')
+    //expect(errorText.value).toBe('4-digit max')
+  })
+
+  it('should have no duplicate input numbers', () => {
+    render (<App />)
+    const inputText = screen.getByRole('textbox')
+    fireEvent.click(screen.getByRole('button', {  name: /2/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /2/i}))
+    expect(inputText.value).not.toBe('22')
+  })
 })
 
 
@@ -96,5 +105,29 @@ describe("Renders the keypad value as the right number", () => {
     fireEvent.change(input1, { target: { value: "1" } })
     expect(input1.value).toBe("1")
   })
+})
 
+describe("For guess and clear buttons", () => {
+  test('Clicking guess will clear the inputted numbers', () => {
+    render (<App />)
+    const inputText = screen.getByRole('textbox')
+    fireEvent.click(screen.getByRole('button', {  name: /1/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /2/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /3/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /4/i}))
+    expect(inputText.value).toBe('1234')
+    fireEvent.click(screen.getByRole('button', {  name: /guess!/i}))
+    expect(inputText.value).toBe('')
+  })
+
+  test('Clicking clear will clear the inputted numbers', () => {
+    render (<App />)
+    const inputText = screen.getByRole('textbox')
+    fireEvent.click(screen.getByRole('button', {  name: /1/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /2/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /3/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /4/i}))
+    fireEvent.click(screen.getByRole('button', {  name: /clear/i}))
+    expect(inputText.value).not.toBe('1234')
+  })
 })
